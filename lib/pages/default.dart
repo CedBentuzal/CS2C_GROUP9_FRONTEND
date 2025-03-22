@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/widget/default_button.dart';
+import 'package:namer_app/pages/login.dart';
+import 'package:namer_app/pages/sign.dart';
 
 class DefaultPage extends StatelessWidget {
   @override
@@ -28,14 +30,16 @@ class DefaultPage extends StatelessWidget {
                   Buttons(
                     text: 'Login',
                     onPressed: () {
-                      Navigator.pushNamed(context, '/login');
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => login()));
                     },
                   ),
                   SizedBox(width: screenWidth * 0.15),
                   Buttons(
                     text: 'Sign up',
                     onPressed: () {
-                      Navigator.pushNamed(context, '/sign');
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Sign()));
                     },
                   ),
                 ],

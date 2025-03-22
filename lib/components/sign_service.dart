@@ -6,8 +6,7 @@ class SignupService {
       {required String username,
       required String email,
       required String password}) async {
-    final Uri url = Uri.parse(
-        'https://your-backend-url.com/api/signup'); // dari I change ang Url Don para backend
+    final Uri url = Uri.parse('http://localhost:3000/api/signup');
     try {
       final response = await http.post(
         url,

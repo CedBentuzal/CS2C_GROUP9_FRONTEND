@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/pages/default.dart';
 import 'package:namer_app/widget/text_field.dart';
-import 'package:namer_app/components/sign_service.dart';
+import 'package:namer_app/components/login_service.dart'; // Ensure this file exists and contains the LoginService class
+// Replace with your actual page
 
-class SignUpForm extends StatefulWidget {
+class LoginForm extends StatefulWidget {
   @override
-  _SignUpFormState createState() => _SignUpFormState();
+  _LoginFormState createState() => _LoginFormState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,18 +25,6 @@ class _SignUpFormState extends State<SignUpForm> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CustomTextField(
-            hintText: "Username",
-            obscureText: false,
-            controller: _usernameController,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return "Username cannot be empty";
-              }
-              return null;
-            },
-          ),
-          SizedBox(height: screenHeight * 0.04),
           CustomTextField(
             hintText: "Email",
             obscureText: false,
@@ -66,21 +52,6 @@ class _SignUpFormState extends State<SignUpForm> {
               return null;
             },
           ),
-          SizedBox(height: screenHeight * 0.04),
-          CustomTextField(
-            hintText: "Confirm Password",
-            obscureText: true,
-            controller: _confirmPasswordController,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return "Please confirm your password";
-              }
-              if (value != _passwordController.text) {
-                return "Passwords do not match";
-              }
-              return null;
-            },
-          ),
           SizedBox(height: screenHeight * 0.05),
           SizedBox(
             width: screenWidth * 0.60,
@@ -88,15 +59,14 @@ class _SignUpFormState extends State<SignUpForm> {
             child: ElevatedButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  String? message = await SignupService.signUpUser(
-                    username: _usernameController.text,
+                  String? message = await LoginService.loginUser(
                     email: _emailController.text,
                     password: _passwordController.text,
                   );
 
-                  if (message == null) {
+                  if (message != null && message.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Signup successful!')),
+                      SnackBar(content: Text('Login successful!')),
                     );
 
                     Navigator.push(context,
@@ -105,7 +75,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     }));
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(message)),
+                      SnackBar(content: Text(message ?? 'Login failed')),
                     );
                   }
                 }
@@ -115,7 +85,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 backgroundColor: Color(0xFFA48C60),
               ),
               child: Text(
-                'Sign up',
+                'Log in',
                 style: TextStyle(
                   fontSize: screenWidth * 0.03,
                   fontWeight: FontWeight.w600,
