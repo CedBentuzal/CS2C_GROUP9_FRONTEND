@@ -94,15 +94,17 @@ class _SignUpFormState extends State<SignUpForm> {
                     password: _passwordController.text,
                   );
 
+                  if (!mounted) return; // ✅ Ensure widget is still in the tree
+
                   if (message == null) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Signup successful!')),
                     );
 
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return DefaultPage();
-                    }));
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => DefaultPage()),
+                    );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text(message)),
