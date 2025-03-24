@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/pages/default.dart';
+import 'package:namer_app/pages/dashboard.dart';
 import 'package:namer_app/widget/text_field.dart';
 import 'package:namer_app/components/login_service.dart'; // Ensure this file exists and contains the LoginService class
 // Replace with your actual page
@@ -64,15 +64,15 @@ class _LoginFormState extends State<LoginForm> {
                     password: _passwordController.text,
                   );
 
-                  if (message != null && message.isEmpty) {
+                  if (message == "success") {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Login successful!')),
                     );
 
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return DefaultPage();
-                    }));
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DashboardPage()));
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text(message ?? 'Login failed')),
