@@ -1,13 +1,16 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class LoginService {
   static Future<String?> loginUser({
     required String email,
     required String password,
   }) async {
-    final Uri url = Uri.parse('http://192.168.1.115:3000/api/login');
+    await dotenv.load();
+    final String baseUrl = dotenv.env['BASE_URL'] ?? 'http://default-url.com';
+    final Uri url = Uri.parse('$baseUrl/api/login');
 
     try {
       final response = await http.post(
@@ -26,7 +29,7 @@ class LoginService {
         await prefs.setString('authToken', token);
         await prefs.setString('username', username); // ✅ Store username
 
-        print('JWT Token saved: $token');
+        print('JWT Token saved');
         print('Username saved: $username');
 
         return "success";

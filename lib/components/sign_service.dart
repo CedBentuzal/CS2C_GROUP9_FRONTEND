@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class SignupService {
   static Future<String?> signUpUser({
@@ -7,7 +8,8 @@ class SignupService {
     required String email,
     required String password,
   }) async {
-    final Uri url = Uri.parse('http://192.168.1.115:3000/api/signup');
+    final String baseUrl = dotenv.env['BASE_URL'] ?? 'http://default-url.com';
+    final Uri url = Uri.parse('$baseUrl/api/signup');
 
     final requestBody = jsonEncode({
       'username': username,
@@ -16,7 +18,6 @@ class SignupService {
     });
 
     print("Sending Request to: $url");
-    print("Request Body: $requestBody");
 
     try {
       final response = await http.post(
