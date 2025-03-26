@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'pages/default.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding
-      .ensureInitialized(); // Ensures async calls work in main()
+  WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
 
-  print("Loaded API Base URL: ${dotenv.env['BASE_URL']}"); // Debugging
+  print("Loaded API Base URL: ${dotenv.env['BASE_URL']}");
 
   runApp(MyApp());
 }

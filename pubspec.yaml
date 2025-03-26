@@ -31,4 +31,6 @@ flutter:
   assets:
     - assets/Thrift.png
     - assets/background.png
+    - assets/Mobile background 2.png
+    - assets/Mobile background 3.png
     - .env
